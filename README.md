@@ -51,21 +51,6 @@ I used MySQL to manage all account data, and the tables are modeled to store bas
 | account_holder_name  | Name of the account holder        |
 | balance              | Current account balance           |
 
-### JPA Mappings:
-The `Account` Java entity is mapped to the database's accounts table. Each field in the Java class has a direct mapping to a column in the MySQL table.
-
-```java
-@Entity
-public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "account_holder_name")
-    private String accountHolderName;
-
-    private Double balance;
-}
 
 ## 5. API Documentation
 ### Here are the key RESTful API endpoints:
