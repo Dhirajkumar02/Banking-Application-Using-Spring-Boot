@@ -55,18 +55,18 @@ I used MySQL to manage all account data, and the tables are modeled to store bas
 ## 5. API Documentation
 ### Here are the key RESTful API endpoints:
 
-. POST /accounts - Create a new account.
-. GET /accounts/{id} - Get an account by ID.
-. PUT /accounts/{id}/deposit - Deposit an amount to an account.
-. PUT /accounts/{id}/withdraw - Withdraw an amount from an account.
-. GET /accounts - Get all accounts (for administrative purposes).
-. DELETE /accounts/{id} - Delete an account by ID.
+1. POST /accounts - Create a new account.
+2. GET /accounts/{id} - Get an account by ID.
+3. PUT /accounts/{id}/deposit - Deposit an amount to an account.
+4. PUT /accounts/{id}/withdraw - Withdraw an amount from an account.
+5. GET /accounts - Get all accounts (for administrative purposes).
+6. DELETE /accounts/{id} - Delete an account by ID.
 
 ## 6. Exception Handling and Validations
 I implemented custom exception handling to ensure that meaningful error messages are returned when an account is not found or when an invalid amount is provided. I created custom exception classes, like AccountNotFoundException and InvalidAmountException, and wrapped responses in a consistent error structure.
 ### Validation:
-. Amount Validation: Checking for non-negative amounts during deposits and withdrawals.
-. Account Validation: Ensuring an account exists in the database before performing operations like deposit or withdrawal.
+1. Amount Validation: Checking for non-negative amounts during deposits and withdrawals.
+2. Account Validation: Ensuring an account exists in the database before performing operations like deposit or withdrawal.
 
 ## 7. Security Considerations (Optional)
 In this application, basic security measures could be implemented using Spring Security, but for now, I have focused on making the APIs accessible without authentication. If needed, authentication and authorization can be added using JWT tokens or OAuth.
@@ -78,12 +78,12 @@ One challenge was handling transactional consistency for operations like deposit
 ### Solution:
 Another challenge was ensuring that error messages were consistent across various exceptions. I addressed this by using @RestControllerAdvice to centralize exception handling and format responses consistently.
 
-## 9. Future Enhancements (Optional)
+## 9. Future Enhancements 
 I envision adding the following features to this application in the future:
 
-. Implementing security with Spring Security for user authentication and authorization.
-. Integrating email notifications for transactions.
-. Adding an audit trail feature to keep track of all banking operations.
+1. Implementing security with Spring Security for user authentication and authorization.
+2. Integrating email notifications for transactions.
+3. Adding an audit trail feature to keep track of all banking operations.
 
 ## 10. Conclusion
 In conclusion, this banking application leverages a solid combination of Spring Boot, Hibernate, JPA, MySQL, and RESTful principles to build a simple yet scalable system. It allows users to perform basic banking operations with robust error handling, and it serves as a foundation for building more complex banking systems.
