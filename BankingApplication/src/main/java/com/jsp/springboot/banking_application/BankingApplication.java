@@ -8,6 +8,7 @@ public class BankingApplication {
 
     // The main method serves as the entry point when the Spring Boot application starts.
 	public static void main(String[] args) {
+		
         // This line runs the Spring Boot application by invoking the run() method.
 		SpringApplication.run(BankingApplication.class, args);
 	}

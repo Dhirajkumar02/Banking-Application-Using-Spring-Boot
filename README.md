@@ -1,4 +1,15 @@
-# Banking Application - Spring Boot
+<<<<<<< HEAD
+# Banking Application  
+This is a Spring Boot project for managing bank accounts.
+=======
+# Banking System  
+A Java-based banking system developed using Spring Boot.
+>>>>>>> e89d985
+
+
+# Banking Application - Spring Boot  
+A Java-based banking system developed using Spring Boot for managing bank accounts.
+
 
 ## Project Overview
 This is a simple banking application built using **Spring Boot** for the back-end. The application provides basic banking functionalities like creating accounts, viewing account details, depositing and withdrawing funds, and account management features.

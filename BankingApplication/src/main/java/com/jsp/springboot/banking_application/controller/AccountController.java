@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.jsp.springboot.banking_application.dto.AccountDto;
+import com.jsp.springboot.banking_application.dto.AmountRequestDto;
+import com.jsp.springboot.banking_application.exception.InvalidAmountException;
 import com.jsp.springboot.banking_application.service.AccountService;
 import com.jsp.springboot.banking_application.utility.ResponseStructure;
 
@@ -44,47 +46,33 @@ public class AccountController {
 		return ResponseEntity.ok(ResponseStructure.create(HttpStatus.OK.value(), "Account retrieved successfully!", accountDto));
 	}
 
+	private void validateAmount(Double amount) {
+		// Validate if the amount is greater than 0, as invalid or 0 withdrawals are not allowed
+		if (amount == null || amount <= 0) {
+			throw new InvalidAmountException("Invalid amount. Amount must be greater than zero.");
+		}
+	}
+
 	// Deposit Amount API - PUT request to deposit an amount into an account
 	@PutMapping("/{id}/deposit")
-	public ResponseEntity<ResponseStructure<AccountDto>> deposit(@PathVariable Long id, @RequestBody Map<String, Double> request) {
-		// Extract the deposit amount from the request map
-		Double amount = request.get("amount");
-
-		// Validate if the amount is greater than 0, as invalid or 0 deposits are not allowed
-		if (amount == null || amount <= 0) {
-			// If validation fails, return HTTP 'Bad Request' status and an empty AccountDto to maintain consistent response type
-			AccountDto emptyAccountDto = new AccountDto();
-			return ResponseEntity.badRequest() 
-					.body(ResponseStructure.create(HttpStatus.BAD_REQUEST.value(), "Invalid amount", emptyAccountDto));
-		}
-
-		// Perform deposit operation by calling the service layer and passing the account ID and amount to deposit
-		AccountDto updatedAccount = accountService.deposit(id, amount);
-
-		// Return a response with HTTP status 'OK' and the updated account information
+	public ResponseEntity<ResponseStructure<AccountDto>> deposit(@PathVariable Long id, @RequestBody AmountRequestDto request) {
+		validateAmount(request.getAmount());  
+		AccountDto updatedAccount = accountService.deposit(id, request.getAmount());
 		return ResponseEntity.ok(ResponseStructure.create(HttpStatus.OK.value(), "Amount deposited successfully!", updatedAccount));
 	}
 
+
 	// Withdraw Amount API - PUT request to withdraw an amount from an account
 	@PutMapping("/{id}/withdraw")
-	public ResponseEntity<ResponseStructure<AccountDto>> withdraw(@PathVariable Long id, @RequestBody Map<String, Double> request) {
-		// Extract the withdrawal amount from the request map
-		Double amount = request.get("amount");
+	public ResponseEntity<ResponseStructure<AccountDto>> withdraw(@PathVariable Long id, @RequestBody AmountRequestDto request) {
+		validateAmount(request.getAmount());  // Reusing the validation method from deposit
+		// Perform withdraw operation
+		AccountDto updatedAccount = accountService.withdraw(id, request.getAmount());
 
-		// Validate if the amount is greater than 0, as invalid or 0 withdrawals are not allowed
-		if (amount == null || amount <= 0) {
-			// If validation fails, return HTTP 'Bad Request' status and an empty AccountDto to maintain consistent response type
-			AccountDto emptyAccountDto = new AccountDto(); // Creating empty AccountDto for consistent response type
-			return ResponseEntity.badRequest() 
-					.body(ResponseStructure.create(HttpStatus.BAD_REQUEST.value(), "Invalid amount", emptyAccountDto));
-		}
-
-		// Perform withdraw operation by calling the service layer and passing the account ID and withdrawal amount
-		AccountDto updatedAccount = accountService.withdraw(id, amount);
-
-		// Return a response with HTTP status 'OK' and the updated account information after withdrawal
+		// Return successful response
 		return ResponseEntity.ok(ResponseStructure.create(HttpStatus.OK.value(), "Amount withdrawn successfully!", updatedAccount));
 	}
+
 
 	// Get All Accounts API - GET request to retrieve all accounts
 	@GetMapping
@@ -98,12 +86,12 @@ public class AccountController {
 
 	// Delete Account by ID API - DELETE request to delete an account using its ID
 	@DeleteMapping("/{id}")
-	public ResponseStructure<AccountDto> deleteAccountById(@PathVariable Long id) {
+	public ResponseEntity<ResponseStructure<AccountDto>> deleteAccountById(@PathVariable Long id) {
 		// Retrieve account details from the service using the provided ID
 		AccountDto accountDto = accountService.getAccountById(id);
 
 		// Return a response with HTTP status 'OK' and the retrieved account
-		return ResponseStructure.create(HttpStatus.OK.value(), "Actor Deleted Successfully!!", accountDto);
+		return ResponseEntity.ok(ResponseStructure.create(HttpStatus.OK.value(), "Account deleted successfully!", accountDto));
 
 	}
 
