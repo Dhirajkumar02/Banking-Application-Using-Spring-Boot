@@ -1,4 +1,109 @@
-﻿# Banking Application Using Spring Boot
+# Banking Application - Spring Boot
+
+## Project Overview
+This is a simple banking application built using **Spring Boot** for the back-end. The application provides basic banking functionalities like creating accounts, viewing account details, depositing and withdrawing funds, and account management features.
+
+## Features
+- **Account Management:**
+  - Create a new account.
+  - View account details.
+  - List all accounts.
+  - Delete an account.
+  
+- **Transaction Features:**
+  - Deposit funds into an account.
+  - Withdraw funds from an account, with balance validation.
+  
+- **Input Validation:**
+  - Validate account creation input.
+  - Check for sufficient balance before withdrawal.
+
+## Technologies Used
+- **Spring Boot**: For creating the RESTful web service.
+- **Spring Data JPA**: To interact with the database.
+- **H2 Database**: In-memory database for demonstration.
+- **DTO (Data Transfer Object) pattern**: Used to transfer data between layers.
+- **Custom Exception Handling**: For validation and handling of edge cases.
+- **JUnit, Mockito**: For unit testing and mocking dependencies.
+
+## API Endpoints
+- **POST /accounts**: Create a new account.
+  - **Request body**: `{ "name": "Dhiraj Kumar", "balance": 1000 }`
+  
+- **GET /accounts/{id}**: Get account details by ID.
+  
+- **PUT /accounts/{id}/deposit**: Deposit funds into an account.
+  - **Request body**: `{ "amount": 500 }`
+  
+- **PUT /accounts/{id}/withdraw**: Withdraw funds from an account.
+  - **Request body**: `{ "amount": 200 }`
+  
+- **GET /accounts**: Get a list of all accounts.
+  
+- **DELETE /accounts/{id}**: Delete an account.
+
+## How to Setup and Run the Application
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Dhirajkumar02/Banking-Application-Using-Spring-Boot.git
+   ```
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd banking-application
+   ```
+
+3. **Setup the environment**:
+   - Ensure **Java 17** or higher is installed.
+   - **Maven** is used for dependency management.
+   - Modify `application.properties` if needed for database configuration.
+   
+4. **Run the application**:
+   ```bash
+   ./mvnw spring-boot:run
+   ```
+
+5. **Access the APIs**:
+   - The application will start running on `http://localhost:8080`.
+
+6. **Testing**:
+   - You can test the APIs with Postman or Curl.
+
+## Project Structure
+
+- **`src/main/java`**: Contains all the Java files.
+  - **`controller/`**: Handles incoming requests and maps them to service layer.
+  - **`service/`**: Contains the core business logic.
+  - **`entity/`**: Includes JPA entities for database interaction.
+  - **`repository/`**: Interface for Spring Data JPA.
+  - **`exception/`**: Custom exceptions used for handling errors.
+  - **`dto/`**: Data Transfer Objects used to map data between layers.
+  
+- **`src/main/resources/application.properties`**: Configuration properties.
+
+## Testing
+- The application uses **JUnit** and **Mockito** for unit testing.
+
+## Known Issues
+- The application currently uses an **H2 in-memory database**, meaning data is lost after a restart. It can be configured to use a persistent database like **MySQL** or **PostgreSQL**.
+
+## Future Improvements
+- **User Authentication**: Implement JWT-based authentication.
+- **Payment Gateway Integration**: Support external transactions.
+- **API Documentation**: Generate API docs with Swagger.
+- **Front-end Implementation**: Develop a front-end interface.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+- **Dhiraj Kumar**  
+- **Email**: dhirajkumarsaah@gmail.com  
+- **GitHub**: [@Dhirajkumar02](https://github.com/Dhirajkumar02/Banking-Application-Using-Spring-Boot))
+
+ 
+ # How to Represent/Explain this project ?
 
 ## 1. Project Overview
 This is a banking application built using Spring Boot, Hibernate, JPA, and MySQL. The main purpose of this application is to provide basic banking operations like creating accounts, depositing money, withdrawing money, getting account details, and deleting accounts, all exposed via REST APIs. The application communicates with a MySQL database to persist and retrieve data. MySQL was chosen due to its robustness and ability to handle relational data efficiently.
